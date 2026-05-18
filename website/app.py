@@ -56,6 +56,17 @@ def extract_url_features(url):
 def home():
     return render_template("index.html")
 
+@app.route("/scanner")
+def scanner():
+    return render_template("scanner.html")
+
+@app.route("/how-it-works")
+def how():
+    return render_template("howitworks.html")
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -68,13 +79,57 @@ def predict():
     features = np.concatenate((bert_features, url_features), axis=1)
 
     prediction = model.predict(features)
+    probabilities = model.predict_proba(features)[0]
+
+    confidence = round(max(probabilities) * 100, 2)
 
     if prediction[0] == 1:
-        result = "Legitimate Website ✅"
+        result = "SAFE"
+        # risk_class = "safe"
     else:
-        result = "Phishing Website ⚠️"
+        result = "PHISHING"
+        # risk_class = "phishing"
 
-    return render_template("index.html", prediction=result)
+    if confidence < 40:
+        risk_class = "safe"
+    elif confidence < 60:
+        risk_class = "warning"
+    else:
+        risk_class = "phishing"
+
+    
+    indicators = []
+
+    if "https" in url:
+        indicators.append(("HTTPS detected", "safe"))
+    else:
+        indicators.append(("No HTTPS detected", "warning"))
+
+    if len(url) < 75:
+        indicators.append(("URL length normal", "safe"))
+    else:
+        indicators.append(("URL unusually long", "warning"))
+
+    digits = sum(c.isdigit() for c in url)
+
+    if digits < 5:
+        indicators.append(("Low numeric characters", "safe"))
+    else:
+        indicators.append(("Too many digits in URL", "warning"))
+
+    if url.count(".") < 4:
+        indicators.append(("Normal domain structure", "safe"))
+    else:
+        indicators.append(("Too many subdomains", "warning"))
+
+    return render_template(
+        "result.html",
+        url=url,
+        result=result,
+        risk_class=risk_class,
+        confidence=confidence,
+        indicators=indicators
+    )
 
 
 if __name__ == "__main__":

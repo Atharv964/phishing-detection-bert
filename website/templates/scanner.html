@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="scanner-container">
+  <h1>Scan URL for Phishing</h1>
+
+  <p class="scanner-subtitle">
+    Enter a website URL to check if it is safe or malicious.
+  </p>
+
+  <form
+    action="/predict"
+    method="post"
+    class="scan-form"
+    onsubmit="showLoader()"
+  >
+    <input
+      type="text"
+      name="url"
+      placeholder="Enter URL (example: https://example.com)"
+      required
+    />
+
+    <button type="submit">Analyze URL</button>
+  </form>
+</div>
+
+{% endblock %}

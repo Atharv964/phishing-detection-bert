@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Phishing Website</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="page-wrapper">
+      <nav class="navbar">
+        <div class="logo">NameHere</div>
+
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/scanner">Scanner</a></li>
+          <li><a href="/how-it-works">How It Works</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+
+      <main class="content">{% block content %} {% endblock %}</main>
+
+      <footer class="footer">
+        <p>© 2026 namehere | BERT based Phishing Detection</p>
+      </footer>
+    </div>
+  </body>
+</html>

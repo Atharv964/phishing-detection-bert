@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="how-container">
+  <h1>How Our Phishing Detection Works</h1>
+
+  <p class="how-subtitle">
+    Our system uses a hybrid AI approach combining Natural Language Processing
+    and Machine Learning to detect phishing URLs.
+  </p>
+
+  <div class="workflow">
+    <div class="step">
+      <h3>URL Input</h3>
+      <p>The user submits a website URL through the scanner interface.</p>
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="step">
+      <h3>Feature Extraction</h3>
+      <p>
+        The system extracts multiple security features such as URL length,
+        number of dots, digits, subdomains, and suspicious patterns.
+      </p>
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="step">
+      <h3>BERT Transformer</h3>
+      <p>
+        The URL is processed using the BERT language model to generate semantic
+        embeddings that capture hidden phishing patterns.
+      </p>
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="step">
+      <h3>Machine Learning Model</h3>
+      <p>
+        A trained Random Forest classifier analyzes both handcrafted features
+        and BERT embeddings.
+      </p>
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="step">
+      <h3>Prediction</h3>
+      <p>
+        The system predicts whether the URL is legitimate or phishing and
+        returns the result instantly.
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

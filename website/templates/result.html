@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="result-container">
+  <h1>Scan Result</h1>
+
+  <div class="result-box">
+    <p><strong>URL:</strong> {{ url }}</p>
+
+    <p class="risk-level">
+      Risk Level:
+      <span class="{{ risk_class }}">{{ result }}</span>
+    </p>
+
+    <p><strong>Confidence Score:</strong> {{ confidence }}%</p>
+  </div>
+
+  <h2>Risk Meter</h2>
+
+  <div class="risk-meter-container">
+    <div class="risk-meter">
+      <div class="risk-fill {{ risk_class }}" style="width: {{ confidence }}%;">
+        {{ confidence }}%
+      </div>
+    </div>
+  </div>
+
+  <h2>Security Indicators</h2>
+
+  <div class="indicators">
+    {% for text, status in indicators %}
+
+    <div class="indicator {{ status }}">
+      {% if status == "safe" %} ✔ {% else %} ⚠ {% endif %} {{ text }}
+    </div>
+
+    {% endfor %}
+  </div>
+
+  {% endblock %}
+</div>
